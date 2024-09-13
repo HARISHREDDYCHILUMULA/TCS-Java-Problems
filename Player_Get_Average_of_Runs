@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+class Main{
+    public static void main(String args[]){
+        Player[] players=new Player[4];
+        Scanner sc= new Scanner(System.in);
+        for(int i=0; i<4; i++){
+            players[i]= new Player(sc.nextInt(), sc.next(), sc.nextInt(), sc.nextInt(), sc.nextInt());
+        }
+        int target=sc.nextInt();
+        double[] validAverages = Solution.getAverageScores(players, target);
+        
+        for( double avg: validAverages){
+            if (avg>=80 && avg<=100){
+                System.out.println("Grade A");
+            }
+            else if (avg>=50 && avg<80){
+                System.out.println("Grade B");
+            }
+            else if (avg>0){
+                System.out.println("Grade C");
+            }
+        }
+    }
+}
+class Solution{
+    public static double[] getAverageScores(Player[] players, int target){
+        double[] averages= new double[players.length];
+        int inde=0;
+        for(Player p: players){
+            if (p.getMatchesPlayed()>target){
+                averages[inde++]=(double) p.getScore()/p.getMatchesPlayed();
+            }
+        }
+        return averages;
+    }
+}
+class Player{
+    int id;
+    int iccRank;
+    String name;
+    int matchesPlayed;
+    int runsScored;
+    public Player(int id, String name, int iccRank, int matchesPlayed, int runsScored){
+        this.id=id;
+        this.name=name;
+        this.iccRank=iccRank;
+        this.matchesPlayed=matchesPlayed;
+        this.runsScored=runsScored;
+    }
+    int getScore(){
+       return runsScored; 
+    }
+    int getMatchesPlayed(){
+        return matchesPlayed;
+    }
+    
+}
